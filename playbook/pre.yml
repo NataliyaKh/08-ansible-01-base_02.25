@@ -1,0 +1,12 @@
+---
+  - name: Print os facts
+    hosts: all
+    pre_tasks:
+     # - name: Install python3
+     #  raw: sudo apt-get -y install python3
+      - name: Install Python if missing (Ubuntu)
+        raw: apt update && apt install -y python3
+        when: ansible_os_family == "Debian"
+      - name: Install Python if missing (CentOS)
+        raw: yum install -y python3 || yum install -y python
+        when: ansible_os_family == "RedHat"
